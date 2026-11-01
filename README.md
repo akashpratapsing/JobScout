@@ -6,7 +6,7 @@ JobScout is a local, privacy-first job **discovery** app. Upload a PDF or DOCX r
 
 It runs entirely on your machine. There is no hosting requirement, no paid subscription, no cloud database, and **no automatic job applications**. JobScout never submits forms, sends recruiter messages, or requests referrals.
 
-- **Stack:** Node.js 22, vanilla HTML/CSS/JS, zero build step
+- **Stack:** Node.js 22.13+, vanilla HTML/CSS/JS, zero build step
 - **Default URL:** `http://127.0.0.1:4317`
 - **Data:** `data/app.json` (atomic writes) plus `data/.secret` for encryption
 - **Dependencies:** `pdfjs-dist`, `mammoth`, `busboy`
@@ -317,7 +317,7 @@ scripts/
   live-smoke.js            Live connector smoke test
   make-fixtures.py         Generates sample PDF/DOCX fixtures
 test/                      Node test suite and fixtures
-.github/workflows/ci.yml   CI: npm test on Node.js 20 and 22
+.github/workflows/ci.yml   CI: npm test on Node.js 22 and 24
 data/                      Local data (created at runtime, gitignored)
 ```
 
@@ -399,7 +399,7 @@ The same options can be supplied through environment variables, which work from 
 4. Do not commit anything under `data/`, `.env` files, API keys, logs, or real resume data. The sample fixtures in `test/fixtures/` must stay fictional.
 5. Open a pull request describing the change and the tests you ran.
 
-Continuous integration runs `npm test` on Node.js 20 and 22 via `.github/workflows/ci.yml`.
+Continuous integration runs `npm test` on Node.js 22 and 24 via `.github/workflows/ci.yml`.
 
 ---
 

@@ -21,7 +21,7 @@
     "privacy"
   ],
   "engines": {
-    "node": ">=20.11"
+    "node": ">=22.13.0"
   },
   "scripts": {
     "start": "node server/index.js",
