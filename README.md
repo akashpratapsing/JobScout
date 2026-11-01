@@ -1,5 +1,7 @@
 # JobScout
 
+[![CI](https://github.com/akashpratapsing/-JobScout/actions/workflows/ci.yml/badge.svg)](https://github.com/akashpratapsing/-JobScout/actions/workflows/ci.yml)
+
 JobScout is a local, privacy-first job **discovery** app. Upload a PDF or DOCX resume, review the extracted profile, set preferences, search live job sources, and get an honest 0–100 match score with a clear explanation.
 
 It runs entirely on your machine. There is no hosting requirement, no paid subscription, no cloud database, and **no automatic job applications**. JobScout never submits forms, sends recruiter messages, or requests referrals.
@@ -402,5 +404,7 @@ Continuous integration runs `npm test` on Node.js 20 and 22 via `.github/workflo
 ---
 
 ## License and responsible use
+
+Released under the [MIT License](LICENSE).
 
 This project is for personal, local job discovery. Respect each source's terms of service, `robots.txt`, rate limits, and applicable law. Do not use JobScout to scrape authenticated pages, bypass access controls, or automate applications. JobScout is provided as-is, without warranty; always review the original posting before applying.

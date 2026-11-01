@@ -4,6 +4,15 @@
   "private": true,
   "description": "Local AI-powered job discovery and matching assistant",
   "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akashpratapsing/-JobScout.git"
+  },
+  "bugs": {
+    "url": "https://github.com/akashpratapsing/-JobScout/issues"
+  },
+  "homepage": "https://github.com/akashpratapsing/-JobScout#readme",
   "keywords": [
     "job-search",
     "resume",
