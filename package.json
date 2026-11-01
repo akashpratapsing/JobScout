@@ -1,0 +1,29 @@
+{
+  "name": "jobscout",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local AI-powered job discovery and matching assistant",
+  "type": "module",
+  "keywords": [
+    "job-search",
+    "resume",
+    "job-matching",
+    "local-first",
+    "privacy"
+  ],
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "node --test test/*.test.js",
+    "test:live": "node scripts/live-smoke.js",
+    "fixtures": "python scripts/make-fixtures.py"
+  },
+  "dependencies": {
+    "busboy": "^1.6.0",
+    "mammoth": "^1.10.0",
+    "pdfjs-dist": "^6.4.299"
+  }
+}

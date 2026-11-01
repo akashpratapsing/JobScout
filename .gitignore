@@ -1,0 +1,15 @@
+node_modules/
+data/
+*.log
+npm-debug.log*
+yarn-error.log*
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+test/tmp/
+coverage/
+.nyc_output/
+.vscode/
+.idea/

@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="JobScout — local AI-assisted job discovery and matching. No auto-apply.">
+  <title>JobScout — local job discovery</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-dashboard" viewBox="0 0 24 24"><path d="M4 13h6V4H4v9Zm0 7h6v-5H4v5Zm10 0h6v-9h-6v9Zm0-16v5h6V4h-6Z"/></symbol>
+    <symbol id="i-profile" viewBox="0 0 24 24"><path d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5Z"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h10v2H4V6Zm0 10h4v2H4v-2Zm0-5h14v2H4v-2Zm14-4h2v6h-2V7ZM8 16h2v6H8v-6Z"/></symbol>
+    <symbol id="i-source" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm6.9 9h-3a15.7 15.7 0 0 0-1.3-5.6A8 8 0 0 1 18.9 11ZM12 4.2c.8 1.1 1.7 3.3 1.9 6.8h-3.8c.2-3.5 1.1-5.7 1.9-6.8ZM5.1 13h3c.2 2.3.7 4.2 1.3 5.6A8 8 0 0 1 5.1 13Zm3-2h-3a8 8 0 0 1 4.3-5.6A15.7 15.7 0 0 0 8.1 11ZM12 19.8c-.8-1.1-1.7-3.3-1.9-6.8h3.8c-.2 3.5-1.1 5.7-1.9 6.8Zm2.6-.8c.6-1.4 1.1-3.3 1.3-5.6h3a8 8 0 0 1-4.3 5.6Z"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l2-6 4 12 2-6h6v2h-4.6l-3.3 9.8L9.2 10l-.9 4H3v-2Z"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="m19.4 13 .1-1-.1-1 2-1.5-2-3.4-2.3.9a7.4 7.4 0 0 0-1.7-1L15 3h-4l-.4 2.5a7.4 7.4 0 0 0-1.7 1l-2.3-.9-2 3.4L6.6 11l-.1 1 .1 1-2 1.5 2 3.4 2.3-.9a7.4 7.4 0 0 0 1.7 1L11 21h4l.4-2.5a7.4 7.4 0 0 0 1.7-1l2.3.9 2-3.4-2-1.5ZM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><path d="M10.5 3a7.5 7.5 0 1 0 4.7 13.3l4.3 4.3 1.4-1.4-4.3-4.3A7.5 7.5 0 0 0 10.5 3Zm0 2a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11Z"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 3 6.5 8.5 8 10l3-3v10h2V7l3 3 1.5-1.5L12 3ZM5 19h14v2H5v-2Z"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 3h7v7h-2V6.4l-9.3 9.3-1.4-1.4L17.6 5H14V3ZM5 5h6v2H7v10h10v-4h2v6H5V5Z"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6.4 5 5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6L6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5Z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m9.2 16.2-4.4-4.4-1.4 1.4 5.8 5.8L20.6 7.6 19.2 6.2 9.2 16.2Z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M12 5V2L7 7l5 5V9a5 5 0 1 1-5 5H5a7 7 0 1 0 7-9Z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M8 3h8l1 2h4v2H3V5h4l1-2Zm-2 6h12l-1 12H7L6 9Zm4 2v8h2v-8h-2Zm4 0v8h2v-8h-2Z"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2l1.7 6.3L20 10l-6.3 1.7L12 18l-1.7-6.3L4 10l6.3-1.7L12 2Zm7 13 .9 3.1L23 19l-3.1.9L19 23l-.9-3.1L15 19l3.1-.9L19 15Z"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">JS</div>
+        <div>
+          <div class="brand-name">JobScout</div>
+          <div class="brand-tag">Local job discovery</div>
+        </div>
+      </div>
+      <nav class="nav" aria-label="Main">
+        <button class="nav-item active" data-page="dashboard" type="button">
+          <svg class="icon"><use href="#i-dashboard"></use></svg><span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-page="profile" type="button">
+          <svg class="icon"><use href="#i-profile"></use></svg><span>Resume &amp; profile</span>
+        </button>
+        <button class="nav-item" data-page="preferences" type="button">
+          <svg class="icon"><use href="#i-sliders"></use></svg><span>Preferences</span>
+        </button>
+        <button class="nav-item" data-page="sources" type="button">
+          <svg class="icon"><use href="#i-source"></use></svg><span>Sources</span>
+        </button>
+        <button class="nav-item" data-page="activity" type="button">
+          <svg class="icon"><use href="#i-activity"></use></svg><span>Activity</span>
+        </button>
+        <button class="nav-item" data-page="settings" type="button">
+          <svg class="icon"><use href="#i-settings"></use></svg><span>Settings</span>
+        </button>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="ai-pill" id="sidebar-ai">AI not configured</div>
+        <div class="local-note">Runs on your machine. Resume data stays local except when you choose to analyze it with an AI provider.</div>
+        <div class="version" id="app-version">v1.0.0</div>
+      </div>
+    </aside>
+
+    <div class="main-wrap">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menu-toggle" type="button" aria-label="Toggle navigation">
+          <svg class="icon"><use href="#i-menu"></use></svg>
+        </button>
+        <div class="page-heading">
+          <h1 id="page-title">Dashboard</h1>
+          <p id="page-subtitle">Ranked roles from sources you can access legitimately.</p>
+        </div>
+        <div class="topbar-actions">
+          <span class="status-pill" id="search-state">Ready</span>
+          <button class="btn primary" id="search-btn" type="button">
+            <svg class="icon"><use href="#i-search"></use></svg><span>Search now</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="banner hidden" id="global-banner" role="status"></div>
+
+      <main class="content" id="main-content">
+        <section class="page active" id="page-dashboard">
+          <div class="onboarding card hidden" id="onboarding-card">
+            <div>
+              <div class="eyebrow">First step</div>
+              <h2>Add your resume to start matching</h2>
+              <p>JobScout extracts your profile locally, then you can review and correct every field before searching. PDF and DOCX are supported.</p>
+            </div>
+            <div class="onboarding-actions">
+              <button class="btn primary" type="button" data-action="go-profile">Upload resume</button>
+              <button class="btn ghost" type="button" data-action="go-preferences">Set preferences</button>
+            </div>
+          </div>
+
+          <div class="stats-grid" id="stats-grid">
+            <div class="stat-card"><span>Active roles</span><strong id="stat-active">0</strong><small id="stat-new">0 new this week</small></div>
+            <div class="stat-card accent"><span>Strong matches</span><strong id="stat-strong">0</strong><small>score 80+</small></div>
+            <div class="stat-card"><span>Saved</span><strong id="stat-saved">0</strong><small>ready to review</small></div>
+            <div class="stat-card"><span>Applied</span><strong id="stat-applied">0</strong><small>tracked manually</small></div>
+          </div>
+
+          <div class="progress-card card hidden" id="progress-card">
+            <div class="progress-head">
+              <div>
+                <div class="eyebrow" id="progress-stage">Searching</div>
+                <h2 id="progress-message">Preparing search…</h2>
+              </div>
+              <div class="progress-percent" id="progress-percent">0%</div>
+            </div>
+            <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
+            <div class="progress-meta" id="progress-meta"></div>
+          </div>
+
+          <div class="section-head">
+            <div>
+              <h2>Matches</h2>
+              <p id="matches-subtitle">No search yet. Add a resume and run your first search.</p>
+            </div>
+            <div class="section-actions">
+              <button class="btn ghost small" id="refresh-jobs" type="button">
+                <svg class="icon"><use href="#i-refresh"></use></svg><span>Refresh</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="filters card">
+            <div class="filter-search">
+              <svg class="icon"><use href="#i-search"></use></svg>
+              <input id="filter-q" type="search" placeholder="Search title, company, skill…" autocomplete="off">
+            </div>
+            <select id="filter-status" aria-label="Status">
+              <option value="">Active (not dismissed)</option>
+              <option value="new">New</option>
+              <option value="saved">Saved</option>
+              <option value="applied">Applied</option>
+              <option value="dismissed">Dismissed</option>
+              <option value="expired">Expired</option>
+              <option value="all">All statuses</option>
+            </select>
+            <select id="filter-source" aria-label="Source"><option value="">All sources</option></select>
+            <select id="filter-mode" aria-label="Work mode">
+              <option value="">Any work mode</option>
+              <option value="remote">Remote</option>
+              <option value="hybrid">Hybrid</option>
+              <option value="onsite">On-site</option>
+              <option value="unknown">Unknown</option>
+            </select>
+            <select id="filter-score" aria-label="Minimum score">
+              <option value="">Any score</option>
+              <option value="60">60+</option>
+              <option value="70">70+</option>
+              <option value="80">80+</option>
+              <option value="90">90+</option>
+            </select>
+            <select id="filter-sort" aria-label="Sort">
+              <option value="score">Best match</option>
+              <option value="posted">Newest posting</option>
+              <option value="newest">Recently discovered</option>
+              <option value="verified">Recently verified</option>
+              <option value="company">Company A–Z</option>
+              <option value="salary">Salary high to low</option>
+            </select>
+            <label class="check-inline"><input type="checkbox" id="filter-expired"> Show expired</label>
+          </div>
+
+          <div class="job-list" id="job-list"></div>
+          <div class="empty-state card hidden" id="jobs-empty">
+            <div class="empty-icon"><svg class="icon"><use href="#i-search"></use></svg></div>
+            <h3 id="jobs-empty-title">No matches yet</h3>
+            <p id="jobs-empty-text">Run a search to discover roles. Only listings from sources with public, permitted access are included.</p>
+            <button class="btn primary" type="button" data-action="search">Search now</button>
+          </div>
+          <div class="load-more-wrap">
+            <button class="btn ghost hidden" id="load-more" type="button">Load more matches</button>
+          </div>
+        </section>
+
+        <section class="page" id="page-profile">
+          <div class="card hidden" id="profile-empty">
+            <div class="upload-zone" id="profile-dropzone">
+              <div class="upload-icon"><svg class="icon"><use href="#i-upload"></use></svg></div>
+              <h2>Upload a resume</h2>
+              <p>PDF or DOCX, up to 10 MB. Text is extracted locally. Scanned/image-only PDFs need OCR and are not supported.</p>
+              <button class="btn primary" type="button" id="profile-upload-btn">Choose file</button>
+              <input type="file" id="resume-input" accept=".pdf,.docx,.txt,.md" hidden>
+              <div class="upload-note">You can edit every extracted field after upload. Nothing is submitted to employers.</div>
+            </div>
+          </div>
+
+          <div id="profile-editor" class="hidden">
+            <div class="profile-top card">
+              <div class="profile-file">
+                <div class="file-badge"><svg class="icon"><use href="#i-profile"></use></svg></div>
+                <div>
+                  <h2 id="profile-file-name">resume.pdf</h2>
+                  <p id="profile-file-meta">Uploaded just now · 0 characters extracted</p>
+                  <div class="completeness"><div class="completeness-bar" id="profile-completeness-bar"></div></div>
+                  <small id="profile-completeness-text">0% complete</small>
+                </div>
+              </div>
+              <div class="profile-actions">
+                <button class="btn primary" type="button" id="analyze-profile-btn"><svg class="icon"><use href="#i-spark"></use></svg><span>Analyze with AI</span></button>
+                <button class="btn ghost" type="button" id="replace-resume-btn">Replace resume</button>
+                <button class="btn danger-ghost" type="button" id="delete-resume-btn"><svg class="icon"><use href="#i-trash"></use></svg><span>Delete resume</span></button>
+              </div>
+            </div>
+
+            <div class="card ai-note hidden" id="profile-ai-note"></div>
+
+            <form id="profile-form" class="profile-form">
+              <div class="card form-card">
+                <div class="card-head"><div><h2>Basics</h2><p>Review the extracted details. Corrections improve every match.</p></div></div>
+                <div class="form-grid two">
+                  <label>Full name<input name="name" autocomplete="name"></label>
+                  <label>Email<input name="email" type="email" autocomplete="email"></label>
+                  <label>Phone<input name="phone" autocomplete="tel"></label>
+                  <label>Location<input name="location" placeholder="Bengaluru, India"></label>
+                  <label>Headline<input name="headline" placeholder="Backend engineer · Python, AWS"></label>
+                  <label>Total experience (years)<input name="experienceYears" type="number" min="0" max="60" step="0.5"></label>
+                  <label>Experience level
+                    <select name="experienceLevel">
+                      <option value="">Not set</option>
+                      <option value="intern">Intern</option>
+                      <option value="entry">Entry</option>
+                      <option value="junior">Junior</option>
+                      <option value="mid">Mid-level</option>
+                      <option value="senior">Senior</option>
+                      <option value="lead">Lead</option>
+                      <option value="principal">Principal</option>
+                      <option value="manager">Manager</option>
+                      <option value="executive">Executive</option>
+                    </select>
+                  </label>
+                  <label class="span-2">Summary<textarea name="summary" rows="3" placeholder="Short professional summary"></textarea></label>
+                  <label class="span-2">Skills <span class="hint">comma or newline separated</span><textarea name="skills" rows="3" placeholder="Python, React, AWS, PostgreSQL"></textarea></label>
+                  <label class="span-2">Suggested job titles <span class="hint">used to search sources</span><textarea name="suggestedTitles" rows="2" placeholder="Backend Engineer, Software Engineer"></textarea></label>
+                  <label class="span-2">Keywords <span class="hint">extra search terms</span><textarea name="keywords" rows="2"></textarea></label>
+                </div>
+              </div>
+
+              <div class="card form-card">
+                <div class="card-head"><div><h2>Experience</h2><p>Roles and internships, most recent first.</p></div><button class="btn ghost small" type="button" data-add="experience">Add role</button></div>
+                <div class="repeater" id="experience-repeater" data-repeater="experience"></div>
+              </div>
+
+              <div class="card form-card">
+                <div class="card-head"><div><h2>Projects</h2><p>Useful evidence when a posting asks for hands-on experience.</p></div><button class="btn ghost small" type="button" data-add="projects">Add project</button></div>
+                <div class="repeater" id="projects-repeater" data-repeater="projects"></div>
+              </div>
+
+              <div class="card form-card">
+                <div class="card-head"><div><h2>Education</h2><p>Only what appears in your resume.</p></div><button class="btn ghost small" type="button" data-add="education">Add education</button></div>
+                <div class="repeater" id="education-repeater" data-repeater="education"></div>
+              </div>
+
+              <div class="card form-card">
+                <div class="card-head"><div><h2>Certifications &amp; links</h2><p>Kept locally and used as supporting evidence.</p></div></div>
+                <div class="form-grid two">
+                  <label class="span-2">Certifications <span class="hint">comma or newline separated</span><textarea name="certifications" rows="2"></textarea></label>
+                  <label>LinkedIn<input name="linkedin" placeholder="https://linkedin.com/in/…"></label>
+                  <label>GitHub<input name="github" placeholder="https://github.com/…"></label>
+                  <label class="span-2">Other links <span class="hint">one per line</span><textarea name="otherLinks" rows="2"></textarea></label>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button class="btn primary" type="submit" id="save-profile-btn">Save profile</button>
+                <span class="form-hint" id="profile-save-hint">Changes are saved locally.</span>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <section class="page" id="page-preferences">
+          <form id="preferences-form">
+            <div class="card form-card">
+              <div class="card-head"><div><h2>What are you looking for?</h2><p>These filters steer every source. Leave a field empty to avoid over-filtering.</p></div></div>
+              <div class="form-grid two">
+                <label>Titles to search <span class="hint">one per line</span><textarea name="titles" rows="3" placeholder="Backend Engineer&#10;Software Engineer"></textarea></label>
+                <label>Locations <span class="hint">cities or regions</span><textarea name="locations" rows="3" placeholder="Bengaluru&#10;Remote"></textarea></label>
+                <label>Countries <span class="hint">one per line</span><textarea name="countries" rows="2" placeholder="India"></textarea></label>
+                <label>Technologies <span class="hint">preferred stack</span><textarea name="technologies" rows="2" placeholder="Python, AWS"></textarea></label>
+                <div class="span-2">
+                  <span class="field-label">Work mode</span>
+                  <div class="check-row">
+                    <label class="check"><input type="checkbox" name="workMode" value="remote"> Remote</label>
+                    <label class="check"><input type="checkbox" name="workMode" value="hybrid"> Hybrid</label>
+                    <label class="check"><input type="checkbox" name="workMode" value="onsite"> On-site</label>
+                  </div>
+                </div>
+                <div class="span-2">
+                  <span class="field-label">Experience level</span>
+                  <div class="check-row wrap" id="experience-level-checks">
+                    <label class="check"><input type="checkbox" name="experienceLevel" value="intern"> Intern</label>
+                    <label class="check"><input type="checkbox" name="experienceLevel" value="entry"> Entry</label>
+                    <label class="check"><input type="checkbox" name="experienceLevel" value="junior"> Junior</label>
+                    <label class="check"><input type="checkbox" name="experienceLevel" value="mid"> Mid</label>
+                    <label class="check"><input type="checkbox" name="experienceLevel" value="senior"> Senior</label>
+                    <label class="check"><input type="checkbox" name="experienceLevel" value="lead"> Lead</label>
+                    <label class="check"><input type="checkbox" name="experienceLevel" value="principal"> Principal</label>
+                    <label class="check"><input type="checkbox" name="experienceLevel" value="manager"> Manager</label>
+                  </div>
+                </div>
+                <label>Employment types <span class="hint">one per line</span><textarea name="employmentTypes" rows="2" placeholder="Full-time&#10;Contract"></textarea></label>
+                <label>Industries <span class="hint">optional</span><textarea name="industries" rows="2"></textarea></label>
+                <label>Minimum salary<input name="minSalary" type="number" min="0" step="1000" placeholder="e.g. 1200000"></label>
+                <label>Currency
+                  <select name="currency">
+                    <option value="INR">INR</option><option value="USD">USD</option><option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option><option value="CAD">CAD</option><option value="AUD">AUD</option>
+                    <option value="SGD">SGD</option><option value="AED">AED</option>
+                  </select>
+                </label>
+                <label>Include companies <span class="hint">only these, if set</span><textarea name="includeCompanies" rows="2"></textarea></label>
+                <label>Exclude companies <span class="hint">always skip</span><textarea name="excludeCompanies" rows="2"></textarea></label>
+                <label>Max results per search<input name="maxResults" type="number" min="20" max="500" step="10"></label>
+                <label>Ignore postings older than (days)<input name="maxAgeDays" type="number" min="1" max="365"></label>
+              </div>
+            </div>
+
+            <div class="card form-card">
+              <div class="card-head"><div><h2>Daily search</h2><p>Optional. JobScout must be running at the scheduled time. Missed days are not caught up.</p></div></div>
+              <div class="form-grid two">
+                <label class="check standalone"><input type="checkbox" name="dailyEnabled"> Enable daily scheduled search</label>
+                <label>Time<input name="dailyTime" type="time" value="09:00"></label>
+                <label>Time zone<input name="dailyTimezone" placeholder="Asia/Kolkata"></label>
+                <div class="form-note span-2">A run starts only within 20 minutes of the scheduled time. This avoids firing an old search hours late.</div>
+              </div>
+            </div>
+
+            <div class="card form-card">
+              <div class="card-head"><div><h2>Job sources</h2><p>Only sources with permitted public access are listed. Configure boards for the ATS platforms you want to search.</p></div></div>
+              <div id="source-config" class="source-config"></div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn primary" type="submit">Save preferences</button>
+              <span class="form-hint">Source boards are public identifiers (for example a Greenhouse board token), not passwords.</span>
+            </div>
+          </form>
+        </section>
+
+        <section class="page" id="page-sources">
+          <div class="section-head">
+            <div><h2>Integrated sources</h2><p>Live sources are fetched directly with rate limits and robots.txt checks where applicable.</p></div>
+          </div>
+          <div class="sources-grid" id="sources-grid"></div>
+          <div class="section-head manual-head">
+            <div><h2>Manual search links</h2><p>These platforms do not offer public jobs APIs for this use case, or their terms restrict automated access. JobScout opens a search for you; it never scrapes or auto-applies.</p></div>
+          </div>
+          <div class="manual-grid" id="manual-links"></div>
+        </section>
+
+        <section class="page" id="page-activity">
+          <div class="section-head">
+            <div><h2>Search history</h2><p>Every run keeps source-level stats and errors so results stay traceable.</p></div>
+            <div class="section-actions">
+              <button class="btn ghost small" id="refresh-runs" type="button"><svg class="icon"><use href="#i-refresh"></use></svg><span>Refresh</span></button>
+              <button class="btn danger-ghost small" id="clear-runs" type="button">Clear history</button>
+            </div>
+          </div>
+          <div id="runs-list"></div>
+        </section>
+
+        <section class="page" id="page-settings">
+          <div class="card form-card">
+            <div class="card-head"><div><h2>AI provider</h2><p>Cloud AI only. JobScout never downloads a local model, never purchases credits, and never switches to a paid fallback.</p></div></div>
+            <form id="ai-form">
+              <div class="form-grid two">
+                <label>Provider
+                  <select name="provider" id="ai-provider"></select>
+                </label>
+                <label>Model
+                  <input name="model" id="ai-model" list="ai-models" placeholder="Model ID">
+                  <datalist id="ai-models"></datalist>
+                </label>
+                <label>API key
+                  <input name="apiKey" id="ai-key" type="password" autocomplete="off" placeholder="Paste a free-tier key">
+                  <span class="hint" id="ai-key-hint">Keys are encrypted at rest and never returned to the browser.</span>
+                </label>
+                <label>Custom base URL <span class="hint">custom provider only</span>
+                  <input name="baseUrl" id="ai-base-url" placeholder="https://…/v1">
+                </label>
+                <label class="check standalone"><input type="checkbox" id="ai-enabled" name="enabled"> Enable AI matching and resume analysis</label>
+                <label class="check standalone"><input type="checkbox" id="ai-clear-key" name="clearKey"> Remove the saved key</label>
+                <div class="form-note span-2">Free-only mode is always on. OpenRouter models must end with <code>:free</code>. If a provider quota runs out, JobScout falls back to clearly labelled rules-based scoring and does not retry with a paid service.</div>
+              </div>
+              <div class="form-actions">
+                <button class="btn primary" type="submit">Save AI settings</button>
+                <button class="btn ghost" type="button" id="test-ai-btn">Test connection</button>
+                <button class="btn ghost" type="button" id="load-models-btn">Load models</button>
+              </div>
+              <div class="ai-result hidden" id="ai-test-result"></div>
+            </form>
+            <div class="provider-info" id="provider-info"></div>
+          </div>
+
+          <div class="card form-card">
+            <div class="card-head"><div><h2>Privacy</h2><p>Minimize what leaves your machine and know exactly when it does.</p></div></div>
+            <div class="privacy-list">
+              <label class="check standalone"><input type="checkbox" id="privacy-full-resume"> Send full resume text when analyzing a resume</label>
+              <p class="privacy-note">If off, only the structured profile is sent. Job matching always sends only the structured profile and the job posting text, never your full resume.</p>
+              <label class="check standalone"><input type="checkbox" id="privacy-keep-text"> Keep extracted resume text on disk</label>
+              <p class="privacy-note">Turn this off to delete the raw text immediately after extraction. Profile fields remain until you delete them.</p>
+            </div>
+            <div class="form-actions">
+              <button class="btn primary" type="button" id="save-privacy-btn">Save privacy settings</button>
+            </div>
+          </div>
+
+          <div class="card form-card">
+            <div class="card-head"><div><h2>Your data</h2><p>Stored in <code>data/app.json</code> on this machine. Backups are kept locally for seven days.</p></div></div>
+            <div class="data-actions">
+              <a class="btn ghost" href="/api/export" download>Export JSON</a>
+              <button class="btn danger-ghost" type="button" id="delete-resume-settings">Delete resume only</button>
+              <button class="btn danger" type="button" id="delete-everything">Delete all data</button>
+            </div>
+            <p class="privacy-note">Deleting all data removes your profile, jobs, search history, preferences, and encrypted API keys. This cannot be undone.</p>
+          </div>
+
+          <div class="card form-card">
+            <div class="card-head"><div><h2>Scope &amp; limitations</h2></div></div>
+            <ul class="plain-list">
+              <li><strong>Discovery only.</strong> JobScout never auto-applies, fills forms, submits resumes, messages recruiters, or requests referrals.</li>
+              <li><strong>No fake coverage.</strong> LinkedIn, Indeed, Glassdoor, Dice, Naukri, Foundit, Instahyre, Hirist, Cutshort, and Wellfound are not integrated because public, permitted job APIs are unavailable. Use the manual links.</li>
+              <li><strong>Verification is best-effort.</strong> A last-verified timestamp means JobScout checked the URL. It is not a guarantee that the role is still open.</li>
+              <li><strong>AI is advisory.</strong> Scores are evidence-based and capped when required skills, experience, or location eligibility do not fit. Always read the original posting.</li>
+            </ul>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="job-modal" role="dialog" aria-modal="true" aria-labelledby="job-modal-title">
+    <div class="modal-backdrop" data-close-modal="job"></div>
+    <div class="modal-panel job-modal-panel">
+      <button class="icon-btn modal-close" type="button" data-close-modal="job" aria-label="Close"><svg class="icon"><use href="#i-close"></use></svg></button>
+      <div id="job-modal-body"></div>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div class="modal-backdrop" data-close-modal="confirm"></div>
+    <div class="modal-panel confirm-panel">
+      <h2 id="confirm-title">Confirm</h2>
+      <p id="confirm-message"></p>
+      <div class="modal-actions">
+        <button class="btn ghost" type="button" id="confirm-cancel">Cancel</button>
+        <button class="btn danger" type="button" id="confirm-ok">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toast-stack" aria-live="polite"></div>
+</body>
+</html>

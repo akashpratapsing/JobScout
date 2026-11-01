@@ -1,0 +1,12 @@
+# Normalize text files to LF on all platforms.
+* text=auto eol=lf
+
+# Binary assets must not be line-ending converted.
+*.pdf binary
+*.docx binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff2 binary
